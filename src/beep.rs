@@ -5,8 +5,10 @@ use rodio;
 
 pub fn play_beep(volume: f32) {
     let (_stream, stream_handle) = rodio::OutputStream::try_default().unwrap();
-
+    
     let file = std::fs::File::open("assets/beep.wav").unwrap();
+    // this part is bad, but it is only for me
+    // let file = std::fs::File::open("/Applications/oxidized-timer.app/assets/beep.wav").unwrap();
     let beep = stream_handle.play_once(BufReader::new(file)).unwrap();
     beep.set_volume(volume);
     beep.play();
