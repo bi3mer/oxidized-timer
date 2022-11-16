@@ -33,7 +33,7 @@ impl Default for MyApp {
         Self {
             current: None,
             duration: None,
-            time: 0
+            time: 2
         }
     }
 }
@@ -63,11 +63,39 @@ impl eframe::App for MyApp {
                     self.reset();
                 }
             } else {
-                ui.add(egui::Slider::new(&mut self.time, 0..=60).text("Time"));
-                if ui.button("Start").clicked() {
-                    self.current = Some(Instant::now());
-                    self.duration = Some(Duration::from_secs(self.time * 60))
-                }
+                ui.vertical(|ui| {
+                    ui.add(egui::Slider::new(&mut self.time, 0..=60).text("Time"));
+                    ui.add_space(3.0);
+                    if ui.button("Start").clicked() {
+                        self.current = Some(Instant::now());
+                        self.duration = Some(Duration::from_secs(self.time * 60))
+                    }
+
+                    // time buttons...
+                    ui.separator();
+                    ui.horizontal(|ui| {
+                        if ui.button("2").clicked() {
+                            self.current = Some(Instant::now());
+                            self.duration = Some(Duration::from_secs(2 * 60));
+                        }
+
+                        if ui.button("5").clicked() {
+                            self.current = Some(Instant::now());
+                            self.duration = Some(Duration::from_secs(5 * 60));
+                        }
+
+                        if ui.button("10").clicked() {
+                            self.current = Some(Instant::now());
+                            self.duration = Some(Duration::from_secs(10 * 60));
+                        }
+
+                        if ui.button("20").clicked() {
+                            self.current = Some(Instant::now());
+                            self.duration = Some(Duration::from_secs(20 * 60));
+                        }
+                    });
+                });
+                
             }
         });
     }
