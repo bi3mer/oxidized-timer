@@ -40,7 +40,6 @@ impl Default for MyApp {
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        ctx.request_repaint_after(Duration::from_secs(1));
 
         egui::CentralPanel::default().show(ctx, |ui| {
             // handle timer if active
@@ -50,6 +49,7 @@ impl eframe::App for MyApp {
                         beep::play_beep(0.8);
                         self.reset();
                     } else {
+                        ctx.request_repaint_after(Duration::from_secs(1));
                         self.time = (duration - current.elapsed()).as_secs();
                     }
                 },
