@@ -55,7 +55,7 @@ impl eframe::App for MyApp {
                 (_, _) => {},
             }
             
-            // draw UI, which changes based on whether the timer is active
+            // Draw UI, which changes based on whether the timer is active
             if self.current.is_some() {
                 ui.heading(format!("Time left: {}", self.time));
                 if ui.button("Cancel").clicked() {
@@ -70,25 +70,19 @@ impl eframe::App for MyApp {
                         self.duration = Some(Duration::from_secs(self.time * 60))
                     }
 
-                    // time buttons...
+                    // Time buttons:
                     ui.separator();
                     ui.horizontal(|ui| {
                         if ui.button("2").clicked() {
                             self.current = Some(Instant::now());
                             self.duration = Some(Duration::from_secs(2 * 60));
-                        }
-
-                        if ui.button("5").clicked() {
+                        } else if ui.button("5").clicked() {
                             self.current = Some(Instant::now());
                             self.duration = Some(Duration::from_secs(5 * 60));
-                        }
-
-                        if ui.button("10").clicked() {
+                        } else if ui.button("10").clicked() {
                             self.current = Some(Instant::now());
                             self.duration = Some(Duration::from_secs(10 * 60));
-                        }
-
-                        if ui.button("20").clicked() {
+                        } else if ui.button("20").clicked() {
                             self.current = Some(Instant::now());
                             self.duration = Some(Duration::from_secs(20 * 60));
                         }
