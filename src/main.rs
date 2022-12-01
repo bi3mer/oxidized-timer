@@ -17,7 +17,8 @@ fn main() {
 struct MyApp {
     current: Option<Instant>,
     duration: Option<Duration>,
-    time: u64
+    time: u64,
+    working: bool
 }
 
 impl MyApp {
@@ -33,7 +34,8 @@ impl Default for MyApp {
         Self {
             current: None,
             duration: None,
-            time: 2
+            time: 2,
+            working: beep::play_beep(0.0)
         }
     }
 }
@@ -41,6 +43,13 @@ impl Default for MyApp {
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
+            // make sure that a beep can even be played
+            if !self.working {
+                ui.heading("Beep sound file not found!");
+                return;
+            }   
+            
+
             // handle timer if active
             match (self.current, self.duration) {
                 (Some(current), Some(duration)) => {
@@ -88,7 +97,6 @@ impl eframe::App for MyApp {
                         }
                     });
                 });
-                
             }
         });
     }
